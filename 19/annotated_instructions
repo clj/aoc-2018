@@ -1,0 +1,48 @@
+    0 addi   ip   16   ip      -> H    JUMP H
+A:  1 seti    1        r2              r2 = 1
+B:  2 seti    1        r5              r5 = 1
+C:  3 mulr   r2   r5   r3              r3 = r2 * r5
+    4 eqrr   r3   r1   r3              COND r3 = r1
+    5 addr   r3   ip   ip      -> D    CJMP D
+    6 addi   ip    1   ip      -> E    JUMP E
+D:  7 addr   r2   r0   r0              r0 = r2 + r0
+E:  8 addi   r5    1   r5              r5 = 1 + r5
+    9 gtrr   r5   r1   r3              COND r5 > r1
+   10 addr   ip   r3   ip      -> F    CJMP F
+   11 seti    2        ip      -> C    JUMP C
+F: 12 addi   r2    1   r2              r2 = 1 + r2
+   13 gtrr   r2   r1   r3              COND r2 > r1
+   14 addr   r3   ip   ip      -> G    CJMP G
+   15 seti    1        ip      -> B    JUMP B
+G: 16 mulr   ip   ip   ip      -> END  JUMP X_x
+H: 17 addi   r1    2   r1
+   18 mulr   r1   r1   r1
+   19 mulr   ip   r1   r1
+   20 muli   r1   11   r1
+   21 addi   r3    3   r3
+   22 mulr   r3   ip   r3
+   23 addi   r3    9   r3
+   24 addr   r1   r3   r1
+   25 addr   ip   r0   ip      -> I    IJMP (CJUMP on r0 being 1)
+   26 seti    0        ip     (-> A)   JUMP (if r0 is 0 at program start)
+I: 27 setr   ip        r3
+   28 mulr   r3   ip   r3
+   29 addr   ip   r3   r3
+   30 mulr   ip   r3   r3
+   31 muli   r3   14   r3
+   32 mulr   r3   ip   r3
+   33 addr   r1   r3   r1
+   34 seti    0        r0
+   35 seti    0        ip      -> A    JUMP
+
+
+1 * 1 == r1
+1 * 2 == r1
+...
+1 * r1 == r1
+2 * 1 == r1
+2 * 2 == r1
+...
+2 * r1 == r1
+...
+r1 * r1 == r1
