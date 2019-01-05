@@ -1,0 +1,54 @@
+A:  0 seti      123               r1          r1 = 123
+    1 bani       r1      456      r1          r1 = r1 & 456; r1 = 72
+    2 eqri       r1       72      r1          COND r1 == 72
+    3 addr       r1       ip      ip          CJMP B
+    4 seti        0               ip          JUMP A
+B:  5 seti        0               r1          r1 = 0
+C:  6 bori       r1    65536      r2          r2 = r1 | 0x10000    # (65536)
+    7 seti  6663054               r1          r1 = 6663054         # (0x65AB8E)
+D:  8 bani       r2      255      r4          r4 = r2 & 0xFF       # (255)
+    9 addr       r1       r4      r1          r1 = r1 + r4
+   10 bani       r1 16777215      r1          r1 = r1 & 0xFFFFFF   # (16777215)
+   11 muli       r1    65899      r1          r1 = r1 * 65899      # (0x1016B)
+   12 bani       r1 16777215      r1          r1 = r1 & 0xFFFFFF   # (16777215)
+   13 gtir      256       r2      r4          COND 256 > r2                           256 > r2 then JUMP F else JUMP K
+   14 addr       r4       ip      ip          CJMP E
+   15 addi       ip        1      ip          JUMP F
+E: 16 seti       27               ip          JUMP K
+F: 17 seti        0               r4          r4 = 0
+G: 18 addi       r4        1      r3          r3 = r4 + 1
+   19 muli       r3      256      r3          r3 = r3 * 256
+   20 gtrr       r3       r2      r3          COND r3 > r2                            r3 > r2 then JUMP I else JUMP J
+   21 addr       r3       ip      ip          CJMP H
+   22 addi       ip        1      ip          JUMP I
+H: 23 seti       25               ip          JUMP J
+I: 24 addi       r4        1      r4          r4 = r4 + 1
+   25 seti       17               ip          JUMP G
+J: 26 setr       r4               r2          r2 = r4
+   27 seti        7               ip          JUMP D
+K: 28 eqrr       r1       r0      r4          COND r1 == r0                           r1 == r0 then JUMP C else JUMP L
+   29 addr       r4       ip      ip          CJMP L
+   30 seti        5               ip          JUMP C
+L:
+
+ {(s: 30, t: 6), (s: 23, t: 26), (s: 16, t: 28), (s: 25, t: 18), (s: 27, t: 8), (s: 22, t: 24), (s: 15, t: 17), (s: 14, t: 16), (s: 21, t: 23), (s: 3, t: 5)}
+
+B: r1 = 0
+C: r2 = r1 | 0x10000    # (65536)
+   r1 = 6663054         # (0x65AB8E)
+D: r4 = r2 & 0xFF       # (255)
+   r1 = r1 + r4
+   r1 = r1 & 0xFFFFFF   # (16777215)
+   r1 = r1 * 65899      # (0x1016B)
+   r1 = r1 & 0xFFFFFF   # (16777215)
+   256 > r2 then JUMP F else JUMP K
+F: r4 = 0
+G: r3 = r4 + 1
+   r3 = r3 * 256
+   r3 > r2 then JUMP I else JUMP J
+I: r4 = r4 + 1
+   JUMP G
+J: r2 = r4
+   JUMP D
+K: r1 > r0 then JUMP C else JUMP L
+L:
