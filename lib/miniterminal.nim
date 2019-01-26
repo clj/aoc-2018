@@ -14,3 +14,6 @@ proc cursorDown*[T](f: T, n: int = 1) =
 
 proc cursorUp*[T](f: T, n: int = 1) =
   f.write("\e[" & $n & "F")
+
+proc resizeTextArea*[T](f: T, w, h: int) =
+  f.write("\e[8;" & $h & ";" & $w & "t")
