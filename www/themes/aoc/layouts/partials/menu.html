@@ -1,0 +1,14 @@
+  <aside class="aside menu">
+  	<ul class="menu">
+      {{- $url := .URL -}}
+  		{{ $p := .Site.GetPage "/day" }}
+  		{{ range $p.Pages.ByWeight }}
+        {{ $title := index (split .LinkTitle ":") 0 }}
+        {{ if (eq ($url|lower) (.URL|lower)) }}
+          <li class="active" hugo-nav="{{ .RelPermalink }}"><span>{{ $title }}</span></li>
+        {{ else }}
+          <li hugo-nav="{{ .RelPermalink }}"><a href="{{ .RelPermalink }}">{{ $title  }}</a></li>
+        {{ end }}
+  		{{ end }}
+  	</ul>
+  </aside>

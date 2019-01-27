@@ -1,0 +1,6 @@
+{{- $path := split (.Get 0) "." -}}
+{{- $data := $.Site.Data -}}
+{{- range $key := $path -}}
+  {{- $data = index $data $key -}}
+{{- end -}}
+{{- $data | jsonify -}}

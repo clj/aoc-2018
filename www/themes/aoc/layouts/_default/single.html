@@ -1,0 +1,10 @@
+{{ define "main" }}
+<div class="wrapper">
+  {{- partial "header.html" . -}}
+  <article class="main">
+	{{.Content}}
+  </article>
+  {{- partial "menu.html" . -}}
+  {{- partial "footer.html" . -}}
+</div>
+{{ end }}

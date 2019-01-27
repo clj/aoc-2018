@@ -1,0 +1,8 @@
+{{- $attrs := slice -}}
+{{- range $key, $value := .Params -}}
+	{{- if not (in (slice "type") $key) -}}
+		{{- $attr := printf "%s=\"%s\"" $key ($value | safeHTMLAttr) -}}
+		{{- $attrs = $attrs | append $attr -}}
+	{{- end -}}
+{{- end -}}
+<script type="{{ default "text/javascript" (.Get "type") }}"{{ if gt (len $attrs) 0 }} {{ end }}{{ delimit $attrs " " | safeHTMLAttr}}>{{ .Inner }}</script>

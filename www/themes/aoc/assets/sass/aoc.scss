@@ -1,0 +1,151 @@
+$background-colour: #0f0f23;
+$title-colour: #ffffff;
+$text-colour: #cccccc;
+$fluorescent-text-colour: #00cc00;
+$link-colour: #009900;
+$link-hover-colour: #99ff99;
+$fixed-width-font: Lucida Console, Courier, monospace, sans-serif;
+
+
+.wrapper {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.wrapper > * {
+  flex: 1 100%;
+}
+
+/* Medium screens */
+@media all and (min-width: 600px) {
+  /* All sidebars share a row */
+  .aside { flex: 1 auto; }
+}
+
+/* Large screens */
+@media all and (min-width: 800px) {
+  .main { flex: 10 0px; }
+  .menu { order: 1; }
+  .main    { order: 2; }
+  .footer  { order: 3; }
+}
+
+body {
+  background-color: $background-colour;
+  font-family: $fixed-width-font;
+  color: $text-colour;
+  font-size: 1em;
+}
+
+body a {
+  color: $link-colour;
+  text-decoration: none;
+}
+
+a::before {
+  content: "[";
+}
+
+a::after {
+  content: "]";
+}
+
+body a:hover {
+  color: $link-hover-colour;
+}
+
+ul.menu {
+  list-style: none;
+
+  span {
+    color: $link-colour;
+  }
+
+  li.active {
+    span::before {
+      content: ">";
+    }
+
+    span::after {
+      content: "<";
+    }
+  }
+}
+
+h1, h2, h3 {
+  color: $title-colour;
+  font-weight: normal;
+  font-size: 1em;
+}
+
+h1::before, h1::after {
+  content: " --- ";
+}
+
+h2::before, h2::after {
+  content: " -- ";
+}
+
+h3::before, h3::after {
+  content: " - ";
+}
+
+header {
+  display: flex;
+  padding-left: 20px;
+  padding-right: 20px;
+  site-title, links {
+    color: $fluorescent-text-colour;
+    text-shadow: 0 0 2px $fluorescent-text-colour, 0 0 5px $fluorescent-text-colour;
+  }
+
+  links {
+    margin-left: auto;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  a::before, a::after {
+    content: "";
+  }
+}
+
+footer {
+  font-size: 50%;
+  color: darken($text-colour, 35%);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  a {
+    color: desaturate($link-colour, 75%);
+  }
+
+  a:hover {
+    color: darken(desaturate($link-hover-colour, 85%), 15%);
+  }
+
+  a::before, a::after {
+    content: "";
+  }
+
+  .license {
+    align-self: right;
+  }
+
+  .license img {
+    vertical-align: middle;
+  }
+}
+
+.main a::before, .main a::after {
+  content: "";
+}
+
+div.highlight pre {
+  padding: 1em;
+  text-shadow: 0 0 2px $fluorescent-text-colour;
+  box-shadow: 0 0 2px $fluorescent-text-colour, 0 0 5px $fluorescent-text-colour, inset 0 0 2px $fluorescent-text-colour, inset 0 0 5px $fluorescent-text-colour;
+}

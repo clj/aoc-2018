@@ -1,3 +1,4 @@
-baseURL = "http://example.org/"
-languageCode = "en-us"
-title = "My New Hugo Site"
+baseURL = "https://clj.github.io/aoc-2018/"
+languageCode = "en-gb"
+title = "AoC 2018 - clj's Nim Sulutions"
+theme="aoc"
