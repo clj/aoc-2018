@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Days on AoC 2018 - clj&#39;s Nim Sulutions</title>
+    <link>https://clj.github.io/aoc-2018/day/</link>
+    <description>Recent content in Days on AoC 2018 - clj&#39;s Nim Sulutions</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-uk</language>
+    <lastBuildDate>Fri, 25 Jan 2019 23:58:34 +0100</lastBuildDate>
+    
+	<atom:link href="https://clj.github.io/aoc-2018/day/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Day 10: The Stars Align</title>
+      <link>https://clj.github.io/aoc-2018/day/10/</link>
+      <pubDate>Fri, 25 Jan 2019 23:58:34 +0100</pubDate>
+      
+      <guid>https://clj.github.io/aoc-2018/day/10/</guid>
+      <description>canvas { border: 1px solid white; margin: 8px; }  Day 10: The Stars Align For Day 10 &amp;ldquo;stars&amp;rdquo;, with a starting position and velocity, have to be animated until such a point where they spell out a message.
+The core of this solution is obviously fairly simple:
+proc move_sky*(points: var Points) = for i, point in points: points[i].x = point.x + point.vx points[i].y = point.y + point.vy Run that for the correct number of iterations and the &amp;ldquo;stars&amp;rdquo; will have aligned&amp;hellip; The actual move_sky function used in the solution is slightly bigger as it also calculates the bounds of the stars, which are used to detect when the stars have aligned and the message is readable.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,111 @@
+.wrapper {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.wrapper > * {
+  flex: 1 100%;
+}
+
+/* Medium screens */
+@media all and (min-width: 600px) {
+  /* All sidebars share a row */
+  .aside { flex: 1 auto; }
+}
+
+/* Large screens */
+@media all and (min-width: 800px) {
+  .main { flex: 10 0px; }
+  .menu { order: 1; }
+  .main    { order: 2; }
+  .footer  { order: 3; }
+}
+
+body {
+  background-color: #0f0f23;
+  font-family: Lucida Console, Courier, monospace, sans-serif;
+  color: #cccccc;
+  font-size: 1em;
+}
+
+body a {
+  color: #009900;
+  text-decoration: none;
+}
+
+a::before {
+  content: "[";
+}
+
+a::after {
+  content: "]";
+}
+
+body a:hover {
+  color: #99ff99;
+}
+
+ul.menu {
+  list-style: none;
+}
+
+
+ul.menu span {
+  color: #009900;
+}
+
+
+ul.menu li.active span::before {
+  content: ">";
+}
+
+ul.menu li.active span::after {
+  content: "<";
+}
+
+h1, h2, h3 {
+  color: #ffffff;
+  font-weight: normal;
+  font-size: 1em;
+}
+
+h1::before, h1::after {
+  content: " --- ";
+}
+
+h2::before, h2::after {
+  content: " -- ";
+}
+
+h3::before, h3::after {
+  content: " - ";
+}
+
+header {
+  display: flex;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+header site-title, header links {
+  color: #00cc00;
+  text-shadow: 0 0 2px #00cc00, 0 0 5px #00cc00;
+}
+
+header a::before, header a::after, .main a::before, .main a::after {
+  content: "";
+}
+
+header a {
+  color: inherit;
+}
+
+header links {
+  margin-left: auto;
+}
+
+div.highlight pre {
+  padding: 1em;
+  text-shadow: 0 0 2px #00cc00;
+  box-shadow: 0 0 2px #00cc00, 0 0 5px #00cc00, inset 0 0 2px #00cc00, inset 0 0 5px #00cc00;
+}
