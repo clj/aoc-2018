@@ -12,9 +12,9 @@ if (typeof Uint16Array === 'undefined') Uint16Array = Array;
 if (typeof Uint32Array === 'undefined') Uint32Array = Array;
 if (typeof Float32Array === 'undefined') Float32Array = Array;
 if (typeof Float64Array === 'undefined') Float64Array = Array;
-var NTI197020 = {size: 0, kind: 18, base: null, node: null, finalizer: null};
-var NTI197016 = {size: 0, kind: 18, base: null, node: null, finalizer: null};
-var NTI198228 = {size: 0,kind: 24,base: null,node: null,finalizer: null};
+var NTI198782 = {size: 0, kind: 18, base: null, node: null, finalizer: null};
+var NTI198235 = {size: 0, kind: 18, base: null, node: null, finalizer: null};
+var NTI198628 = {size: 0,kind: 24,base: null,node: null,finalizer: null};
 var NTI160957 = {size: 0,kind: 24,base: null,node: null,finalizer: null};
 var NTI160253 = {size: 0,kind: 24,base: null,node: null,finalizer: null};
 var NTI104 = {size: 0,kind: 31,base: null,node: null,finalizer: null};
@@ -61,17 +61,17 @@ NTI160206.node = NNI160206;
 NTI160204.base = NTI160206;
 NTI160665.base = NTI160204;
 NTI160957.base = NTI160204;
-NTI198228.base = NTI104;
-var NNI197016 = {kind: 2, len: 4, offset: 0, typ: null, name: null, sons: [{kind: 1, offset: "Field0", len: 0, typ: NTI104, name: "Field0", sons: null}, 
-{kind: 1, offset: "Field1", len: 0, typ: NTI104, name: "Field1", sons: null}, 
-{kind: 1, offset: "Field2", len: 0, typ: NTI104, name: "Field2", sons: null}, 
-{kind: 1, offset: "Field3", len: 0, typ: NTI104, name: "Field3", sons: null}]};
-NTI197016.node = NNI197016;
-var NNI197020 = {kind: 2, len: 4, offset: 0, typ: null, name: null, sons: [{kind: 1, offset: "Field0", len: 0, typ: NTI104, name: "Field0", sons: null}, 
-{kind: 1, offset: "Field1", len: 0, typ: NTI104, name: "Field1", sons: null}, 
-{kind: 1, offset: "Field2", len: 0, typ: NTI104, name: "Field2", sons: null}, 
-{kind: 1, offset: "Field3", len: 0, typ: NTI104, name: "Field3", sons: null}]};
-NTI197020.node = NNI197020;
+NTI198628.base = NTI124;
+var NNI198235 = {kind: 2, len: 4, offset: 0, typ: null, name: null, sons: [{kind: 1, offset: "Field0", len: 0, typ: NTI124, name: "Field0", sons: null}, 
+{kind: 1, offset: "Field1", len: 0, typ: NTI124, name: "Field1", sons: null}, 
+{kind: 1, offset: "Field2", len: 0, typ: NTI124, name: "Field2", sons: null}, 
+{kind: 1, offset: "Field3", len: 0, typ: NTI124, name: "Field3", sons: null}]};
+NTI198235.node = NNI198235;
+var NNI198782 = {kind: 2, len: 4, offset: 0, typ: null, name: null, sons: [{kind: 1, offset: "Field0", len: 0, typ: NTI124, name: "Field0", sons: null}, 
+{kind: 1, offset: "Field1", len: 0, typ: NTI124, name: "Field1", sons: null}, 
+{kind: 1, offset: "Field2", len: 0, typ: NTI124, name: "Field2", sons: null}, 
+{kind: 1, offset: "Field3", len: 0, typ: NTI124, name: "Field3", sons: null}]};
+NTI198782.node = NNI198782;
 
 function cstrToNimstr(c_16242) {
 		  var ln = c_16242.length;
@@ -805,75 +805,83 @@ function get_elems_160954(n_160956, default_160973) {
 
 }
 
-function new_seq_198223(len_198227) {
-	var result_198229 = null;
+function new_seq_198623(len_198627) {
+	var result_198629 = null;
 
-		result_198229 = new Array(len_198227); for (var i=0;i<len_198227;++i) {result_198229[i]=0;}
-	return result_198229;
+		result_198629 = new Array(len_198627); for (var i=0;i<len_198627;++i) {result_198629[i]=0.0;}
+	return result_198629;
 
 }
 
-function get_int_160714(n_160716, default_160717) {
-			var Tmp1;
-
-	var result_160718 = 0;
+function get_float_160802(n_160804, default_160805) {
+	var result_160806 = 0.0;
 
 	BeforeRet: do {
-			if ((n_160716 === null)) Tmp1 = true; else {				Tmp1 = !((n_160716.kind == 2));			}		if (Tmp1) {
-		result_160718 = default_160717;
+		if ((n_160804 === null)) {
+		result_160806 = default_160805;
 		break BeforeRet;
 		}
-		else {
-			result_160718 = n_160716.num;
-			break BeforeRet;
-		}
 		
+		switch (n_160804.kind) {
+		case 3:
+			result_160806 = n_160804.fnum;
+			break BeforeRet;
+			break;
+		case 2:
+			result_160806 = n_160804.num;
+			break BeforeRet;
+			break;
+		default: 
+			result_160806 = default_160805;
+			break BeforeRet;
+			break;
+		}
 	} while (false);
 
-	return result_160718;
+	return result_160806;
 
 }
 
-function json_to_points_198029(json_198031) {
-	var result_198032 = null;
+function json_to_points_198225(json_198229) {
+	var result_198244 = null;
 
 		L1: do {
-			var p_198042 = null;
-			var colontmp__198296 = null;
-			colontmp__198296 = get_elems_160954(json_198031, []);
-			var i_198299 = 0;
-			var l_198301 = (colontmp__198296 != null ? colontmp__198296.length : 0);
+			var p_198254 = null;
+			var colontmp__198712 = null;
+			colontmp__198712 = get_elems_160954(json_198229, []);
+			var i_198715 = 0;
+			var l_198717 = (colontmp__198712 != null ? colontmp__198712.length : 0);
 			L2: do {
 					L3: while (true) {
-					if (!(i_198299 < l_198301)) break L3;
-						p_198042 = colontmp__198296[i_198299];
+					if (!(i_198715 < l_198717)) break L3;
+						p_198254 = colontmp__198712[i_198715];
 						L4: do {
-							var HEX3Atmp_198209 = get_elems_160954(p_198042, []);
-							var i_198213 = 0;
-							var result_198254 = new_seq_198223((HEX3Atmp_198209 != null ? HEX3Atmp_198209.length : 0));
+							var HEX3Atmp_198609 = get_elems_160954(p_198254, []);
+							var i_198613 = 0;
+							var result_198654 = new_seq_198623((HEX3Atmp_198609 != null ? HEX3Atmp_198609.length : 0));
 							L5: do {
-								var it_198263 = null;
-								var i_198293 = 0;
-								var l_198295 = (HEX3Atmp_198209 != null ? HEX3Atmp_198209.length : 0);
+								var it_198663 = null;
+								var i_198709 = 0;
+								var l_198711 = (HEX3Atmp_198609 != null ? HEX3Atmp_198609.length : 0);
 								L6: do {
 										L7: while (true) {
-										if (!(i_198293 < l_198295)) break L7;
-											it_198263 = HEX3Atmp_198209[i_198293];
-											result_198254[i_198213] = get_int_160714(it_198263, 0);
-											i_198213 += 1;
-											i_198293 += 1;
+										if (!(i_198709 < l_198711)) break L7;
+											it_198663 = HEX3Atmp_198609[i_198709];
+											result_198654[i_198613] = get_float_160802(it_198663, 0.0);
+											i_198613 += 1;
+											i_198709 += 1;
 										}
 								} while(false);
 							} while(false);
 						} while(false);
-						var d_198276 = nimCopy(null, result_198254, NTI198228);
-						if (result_198032 != null) { result_198032.push({Field0: d_198276[0], Field1: d_198276[1], Field2: d_198276[2], Field3: d_198276[3]}); } else { result_198032 = [{Field0: d_198276[0], Field1: d_198276[1], Field2: d_198276[2], Field3: d_198276[3]}]; };
-						i_198299 += 1;
+						var d_198676 = nimCopy(null, result_198654, NTI198628);
+						if (result_198244 != null) { result_198244.push({Field0: d_198676[0], Field1: d_198676[1], Field2: d_198676[2], Field3: d_198676[3]}); } else { result_198244 = [{Field0: d_198676[0], Field1: d_198676[1], Field2: d_198676[2], Field3: d_198676[3]}]; };
+						i_198715 += 1;
 					}
 			} while(false);
 		} while(false);
 
-	return result_198032;
+	return result_198244;
 
 }
 
@@ -886,51 +894,60 @@ function get_context2d_196728(c_196730) {
 
 }
 
-function bounds_197152(points_197154) {
-	var result_197155 = {Field0: 0, Field1: 0, Field2: 0, Field3: 0};
+function high_198794() {
+	var result_198799 = 0.0;
 
-		result_197155.Field0 = 2147483647;
-		result_197155.Field1 = 2147483647;
-		result_197155.Field2 = -2147483648;
-		result_197155.Field3 = -2147483648;
+		result_198799 = Infinity;
+
+	return result_198799;
+
+}
+
+function low_198822() {
+	var result_198827 = 0.0;
+
+		result_198827 = -Infinity;
+
+	return result_198827;
+
+}
+
+function bounds_198774(points_198779) {
+	var result_198791 = {Field0: 0.0, Field1: 0.0, Field2: 0.0, Field3: 0.0};
+
+		result_198791.Field0 = high_198794();
+		result_198791.Field1 = high_198794();
+		result_198791.Field2 = low_198822();
+		result_198791.Field3 = low_198822();
 		L1: do {
-			var i_197201 = 0;
-			var point_197202 = {Field0: 0, Field1: 0, Field2: 0, Field3: 0};
-			var i_197214 = 0;
+			var i_198894 = 0;
+			var point_198895 = {Field0: 0.0, Field1: 0.0, Field2: 0.0, Field3: 0.0};
+			var i_198919 = 0;
 			L2: do {
 					L3: while (true) {
-					if (!(i_197214 < (points_197154 != null ? points_197154.length : 0))) break L3;
-						i_197201 = i_197214;
-						nimCopy(point_197202, points_197154[i_197214], NTI197016);
-						result_197155.Field0 = nimMin(result_197155.Field0, points_197154[i_197201].Field0);
-						result_197155.Field1 = nimMin(result_197155.Field1, points_197154[i_197201].Field1);
-						result_197155.Field2 = nimMax(result_197155.Field2, points_197154[i_197201].Field0);
-						result_197155.Field3 = nimMax(result_197155.Field3, points_197154[i_197201].Field1);
-						i_197214 += 1;
+					if (!(i_198919 < (points_198779 != null ? points_198779.length : 0))) break L3;
+						i_198894 = i_198919;
+						nimCopy(point_198895, points_198779[i_198919], NTI198235);
+						result_198791.Field0 = nimMin(result_198791.Field0, points_198779[i_198894].Field0);
+						result_198791.Field1 = nimMin(result_198791.Field1, points_198779[i_198894].Field1);
+						result_198791.Field2 = nimMax(result_198791.Field2, points_198779[i_198894].Field0);
+						result_198791.Field3 = nimMax(result_198791.Field3, points_198779[i_198894].Field1);
+						i_198919 += 1;
 					}
 			} while(false);
 		} while(false);
 
-	return result_197155;
+	return result_198791;
 
 }
 
-function HEX2F_19442(x_19444, y_19445) {
-	var result_19446 = 0.0;
+function calc_fps_198948(bounds_198953) {
+	var result_198954 = 0.0;
 
-		result_19446 = (x_19444 / y_19445);
+		var height_198955 = (bounds_198953.Field3 - bounds_198953.Field1);
+		result_198954 = (height_198955 / 1.0000000000000000e+01);
 
-	return result_19446;
-
-}
-
-function calc_fps_198479(bounds_198481) {
-	var result_198482 = 0.0;
-
-		var height_198483 = (bounds_198481.Field3 - bounds_198481.Field1);
-		result_198482 = HEX2F_19442(height_198483, 10);
-
-	return result_198482;
+	return result_198954;
 
 }
 
@@ -949,11 +966,11 @@ function canvas_196745(ctx_196747) {
 
 }
 
-function clear_198443(ctx_198445) {
-		ctx_198445.save();
-		fill_styleHEX3D_196128(ctx_198445, "#0f0f23");
-		ctx_198445.fillRect(0.0, 0.0, canvas_196745(ctx_198445).width, canvas_196745(ctx_198445).height);
-		ctx_198445.restore();
+function clear_198128(ctx_198130) {
+		ctx_198130.save();
+		fill_styleHEX3D_196128(ctx_198130, "#0f0f23");
+		ctx_198130.fillRect(0.0, 0.0, canvas_196745(ctx_198130).width, canvas_196745(ctx_198130).height);
+		ctx_198130.restore();
 
 	
 }
@@ -964,216 +981,192 @@ function stroke_styleHEX3D_196179(ctx_196181, color_196182) {
 	
 }
 
-function draw_scale_axis_198315(ctx_198317, length_198318, value_198319) {
-		ctx_198317.save();
-		fill_styleHEX3D_196128(ctx_198317, "white");
-		stroke_styleHEX3D_196179(ctx_198317, "white");
-		ctx_198317.textAlign = "center";
-		ctx_198317.textBaseline = "middle";
-		ctx_198317.beginPath();
-		ctx_198317.moveTo(3.0000000000000000e+01, 1.5000000000000000e+01);
-		ctx_198317.lineTo((length_198318 - 3.0000000000000000e+01), 1.5000000000000000e+01);
-		ctx_198317.moveTo(4.0000000000000000e+01, 1.0000000000000000e+01);
-		ctx_198317.lineTo(3.0000000000000000e+01, 1.5000000000000000e+01);
-		ctx_198317.lineTo(4.0000000000000000e+01, 2.0000000000000000e+01);
-		ctx_198317.moveTo(((length_198318 - 3.0000000000000000e+01) - 1.0000000000000000e+01), 1.0000000000000000e+01);
-		ctx_198317.lineTo((length_198318 - 3.0000000000000000e+01), 1.5000000000000000e+01);
-		ctx_198317.lineTo(((length_198318 - 3.0000000000000000e+01) - 1.0000000000000000e+01), 2.0000000000000000e+01);
-		ctx_198317.stroke();
-		var text_h_metrics_198320 = ctx_198317.measureText(toJSStr(cstrToNimstr((value_198319)+"")));
-		fill_styleHEX3D_196128(ctx_198317, "#0f0f23");
-		ctx_198317.fillRect((((length_198318 / 2.0000000000000000e+00) - (text_h_metrics_198320.width / 2.0000000000000000e+00)) - 1.0000000000000000e+01), 0.0, (text_h_metrics_198320.width + 2.0000000000000000e+01), 2.9000000000000000e+01);
-		fill_styleHEX3D_196128(ctx_198317, "white");
-		ctx_198317.fillText(toJSStr(cstrToNimstr((value_198319)+"")), (length_198318 / 2.0000000000000000e+00), 1.5000000000000000e+01);
-		ctx_198317.restore();
+function draw_scale_axis_198053(ctx_198055, length_198056, value_198057) {
+		ctx_198055.save();
+		fill_styleHEX3D_196128(ctx_198055, "white");
+		stroke_styleHEX3D_196179(ctx_198055, "white");
+		ctx_198055.textAlign = "center";
+		ctx_198055.textBaseline = "middle";
+		ctx_198055.beginPath();
+		ctx_198055.moveTo(3.0000000000000000e+01, 1.5000000000000000e+01);
+		ctx_198055.lineTo((length_198056 - 3.0000000000000000e+01), 1.5000000000000000e+01);
+		ctx_198055.moveTo(4.0000000000000000e+01, 1.0000000000000000e+01);
+		ctx_198055.lineTo(3.0000000000000000e+01, 1.5000000000000000e+01);
+		ctx_198055.lineTo(4.0000000000000000e+01, 2.0000000000000000e+01);
+		ctx_198055.moveTo(((length_198056 - 3.0000000000000000e+01) - 1.0000000000000000e+01), 1.0000000000000000e+01);
+		ctx_198055.lineTo((length_198056 - 3.0000000000000000e+01), 1.5000000000000000e+01);
+		ctx_198055.lineTo(((length_198056 - 3.0000000000000000e+01) - 1.0000000000000000e+01), 2.0000000000000000e+01);
+		ctx_198055.stroke();
+		var text_h_metrics_198058 = ctx_198055.measureText(toJSStr(value_198057));
+		fill_styleHEX3D_196128(ctx_198055, "#0f0f23");
+		ctx_198055.fillRect((((length_198056 / 2.0000000000000000e+00) - (text_h_metrics_198058.width / 2.0000000000000000e+00)) - 1.0000000000000000e+01), 0.0, (text_h_metrics_198058.width + 2.0000000000000000e+01), 2.9000000000000000e+01);
+		fill_styleHEX3D_196128(ctx_198055, "white");
+		ctx_198055.fillText(toJSStr(value_198057), (length_198056 / 2.0000000000000000e+00), 1.5000000000000000e+01);
+		ctx_198055.restore();
 
 	
 }
 
-function draw_198334(points_198336, bounds_198337, ctx_198338) {
-		var canvas_width_198339 = canvas_196745(ctx_198338).width;
-		var canvas_height_198340 = canvas_196745(ctx_198338).height;
-		var width_198341 = (bounds_198337.Field2 - bounds_198337.Field0);
-		var height_198342 = (bounds_198337.Field3 - bounds_198337.Field1);
-		var scale_x_198343 = ((canvas_width_198339 - 6.0000000000000000e+01) / (width_198341 + 1));
-		var scale_y_198344 = ((canvas_height_198340 - 6.0000000000000000e+01) / (height_198342 + 1));
-		ctx_198338.save();
-		fill_styleHEX3D_196128(ctx_198338, "white");
-		draw_scale_axis_198315(ctx_198338, canvas_width_198339, width_198341);
-		ctx_198338.translate(0.0, canvas_height_198340);
-		ctx_198338.rotate(-1.5707963267948966e+00);
-		draw_scale_axis_198315(ctx_198338, canvas_height_198340, height_198342);
-		ctx_198338.setTransform(1.0000000000000000e+00, 0.0, 0.0, 1.0000000000000000e+00, 0.0, 0.0);
-		ctx_198338.translate(3.0000000000000000e+01, 3.0000000000000000e+01);
-		ctx_198338.scale(scale_x_198343, scale_y_198344);
-		ctx_198338.translate(-(bounds_198337.Field0), -(bounds_198337.Field1));
+function draw_199020(points_199025, bounds_199028, ctx_199030) {
+		var canvas_width_199031 = canvas_196745(ctx_199030).width;
+		var canvas_height_199032 = canvas_196745(ctx_199030).height;
+		var width_199033 = (bounds_199028.Field2 - bounds_199028.Field0);
+		var height_199034 = (bounds_199028.Field3 - bounds_199028.Field1);
+		var scale_x_199035 = ((canvas_width_199031 - 6.0000000000000000e+01) / (width_199033 + 1.0000000000000000e+00));
+		var scale_y_199036 = ((canvas_height_199032 - 6.0000000000000000e+01) / (height_199034 + 1.0000000000000000e+00));
+		ctx_199030.save();
+		fill_styleHEX3D_196128(ctx_199030, "white");
+		draw_scale_axis_198053(ctx_199030, canvas_width_199031, cstrToNimstr((((width_199033)|0))+""));
+		ctx_199030.translate(0.0, canvas_height_199032);
+		ctx_199030.rotate(-1.5707963267948966e+00);
+		draw_scale_axis_198053(ctx_199030, canvas_height_199032, cstrToNimstr((((height_199034)|0))+""));
+		ctx_199030.setTransform(1.0000000000000000e+00, 0.0, 0.0, 1.0000000000000000e+00, 0.0, 0.0);
+		ctx_199030.translate(3.0000000000000000e+01, 3.0000000000000000e+01);
+		ctx_199030.scale(scale_x_199035, scale_y_199036);
+		ctx_199030.translate(-(bounds_199028.Field0), -(bounds_199028.Field1));
 		L1: do {
-			var point_198415 = {Field0: 0, Field1: 0, Field2: 0, Field3: 0};
-			var i_198427 = 0;
-			var l_198429 = (points_198336 != null ? points_198336.length : 0);
+			var point_199215 = {Field0: 0.0, Field1: 0.0, Field2: 0.0, Field3: 0.0};
+			var i_199229 = 0;
+			var l_199231 = (points_199025 != null ? points_199025.length : 0);
 			L2: do {
 					L3: while (true) {
-					if (!(i_198427 < l_198429)) break L3;
-						nimCopy(point_198415, points_198336[i_198427], NTI197016);
-						ctx_198338.fillRect(point_198415.Field0, point_198415.Field1, 1.0000000000000000e+00, 1.0000000000000000e+00);
-						i_198427 += 1;
+					if (!(i_199229 < l_199231)) break L3;
+						nimCopy(point_199215, points_199025[i_199229], NTI198235);
+						ctx_199030.fillRect(point_199215.Field0, point_199215.Field1, 1.0000000000000000e+00, 1.0000000000000000e+00);
+						i_199229 += 1;
 					}
 			} while(false);
 		} while(false);
-		ctx_198338.restore();
+		ctx_199030.restore();
 
 	
 }
 
-function frame_198461(points_198463, bounds_198464, ctx_198465) {
-		clear_198443(ctx_198465);
-		draw_198334(points_198463, bounds_198464, ctx_198465);
+function frame_198991(points_198996, bounds_198999, ctx_199001) {
+		clear_198128(ctx_199001);
+		draw_199020(points_198996, bounds_198999, ctx_199001);
 
 	
 }
 
-function move_sky_197040(points_197043, points_197043_Idx, reverse_197044) {
-	var result_197045 = {Field0: 0, Field1: 0, Field2: 0, Field3: 0};
+function move_sky_199275(points_199281, points_199281_Idx, reverse_199283, ratio_199285) {
+	var result_199287 = {Field0: 0.0, Field1: 0.0, Field2: 0.0, Field3: 0.0};
 
-		result_197045.Field0 = 2147483647;
-		result_197045.Field1 = 2147483647;
-		result_197045.Field2 = -2147483648;
-		result_197045.Field3 = -2147483648;
+		result_199287.Field0 = high_198794();
+		result_199287.Field1 = high_198794();
+		result_199287.Field2 = low_198822();
+		result_199287.Field3 = low_198822();
 		L1: do {
-			var i_197124 = 0;
-			var point_197125 = {Field0: 0, Field1: 0, Field2: 0, Field3: 0};
-			var colontmp__197135 = null;
-			colontmp__197135 = points_197043[points_197043_Idx];
-			var i_197138 = 0;
+			var i_199329 = 0;
+			var point_199330 = {Field0: 0.0, Field1: 0.0, Field2: 0.0, Field3: 0.0};
+			var colontmp__199372 = null;
+			colontmp__199372 = points_199281[points_199281_Idx];
+			var i_199375 = 0;
 			L2: do {
 					L3: while (true) {
-					if (!(i_197138 < (colontmp__197135 != null ? colontmp__197135.length : 0))) break L3;
-						i_197124 = i_197138;
-						nimCopy(point_197125, colontmp__197135[i_197138], NTI197016);
-						if (reverse_197044) {
-						points_197043[points_197043_Idx][i_197124].Field0 = (point_197125.Field0 - point_197125.Field2);
-						points_197043[points_197043_Idx][i_197124].Field1 = (point_197125.Field1 - point_197125.Field3);
+					if (!(i_199375 < (colontmp__199372 != null ? colontmp__199372.length : 0))) break L3;
+						i_199329 = i_199375;
+						nimCopy(point_199330, colontmp__199372[i_199375], NTI198235);
+						if (reverse_199283) {
+						points_199281[points_199281_Idx][i_199329].Field0 = (point_199330.Field0 - (point_199330.Field2 * ratio_199285));
+						points_199281[points_199281_Idx][i_199329].Field1 = (point_199330.Field1 - (point_199330.Field3 * ratio_199285));
 						}
 						else {
-							points_197043[points_197043_Idx][i_197124].Field0 = (point_197125.Field0 + point_197125.Field2);
-							points_197043[points_197043_Idx][i_197124].Field1 = (point_197125.Field1 + point_197125.Field3);
+							points_199281[points_199281_Idx][i_199329].Field0 = (point_199330.Field0 + (point_199330.Field2 * ratio_199285));
+							points_199281[points_199281_Idx][i_199329].Field1 = (point_199330.Field1 + (point_199330.Field3 * ratio_199285));
 						}
 						
-						result_197045.Field0 = nimMin(result_197045.Field0, points_197043[points_197043_Idx][i_197124].Field0);
-						result_197045.Field1 = nimMin(result_197045.Field1, points_197043[points_197043_Idx][i_197124].Field1);
-						result_197045.Field2 = nimMax(result_197045.Field2, points_197043[points_197043_Idx][i_197124].Field0);
-						result_197045.Field3 = nimMax(result_197045.Field3, points_197043[points_197043_Idx][i_197124].Field1);
-						i_197138 += 1;
+						result_199287.Field0 = nimMin(result_199287.Field0, points_199281[points_199281_Idx][i_199329].Field0);
+						result_199287.Field1 = nimMin(result_199287.Field1, points_199281[points_199281_Idx][i_199329].Field1);
+						result_199287.Field2 = nimMax(result_199287.Field2, points_199281[points_199281_Idx][i_199329].Field0);
+						result_199287.Field3 = nimMax(result_199287.Field3, points_199281[points_199281_Idx][i_199329].Field1);
+						i_199375 += 1;
 					}
 			} while(false);
 		} while(false);
 
-	return result_197045;
+	return result_199287;
 
 }
 
-function quit_198497(old_bounds_198499, new_bounds_198500) {
-	var result_198501 = false;
+function quit_199435(old_bounds_199440, new_bounds_199443) {
+	var result_199444 = false;
 
 	BeforeRet: do {
-		var last_height_198502 = (old_bounds_198499.Field3 - old_bounds_198499.Field1);
-		var height_198503 = (new_bounds_198500.Field3 - new_bounds_198500.Field1);
-		result_198501 = ((last_height_198502 < 10) && (last_height_198502 < height_198503));
+		var last_height_199445 = (old_bounds_199440.Field3 - old_bounds_199440.Field1);
+		var height_199446 = (new_bounds_199443.Field3 - new_bounds_199443.Field1);
+		var last_width_199447 = (old_bounds_199440.Field2 - old_bounds_199440.Field0);
+		var width_199448 = (new_bounds_199443.Field2 - new_bounds_199443.Field0);
+		result_199444 = ((last_width_199447 < width_199448) || (last_height_199445 < height_199446));
 		break BeforeRet;
 	} while (false);
 
-	return result_198501;
+	return result_199444;
 
 }
 
-function loop_198520(points_198523, points_198523_Idx, canvas_198524) {
+function loop_198748(points_198754, points_198754_Idx, canvas_198756) {
 
-		function run_198528(timestamp_198530) {
-
-					function timeout_198545() {
-							window.requestAnimationFrame(run_198528);
-
-						
-					}
-
+		function run_198970(timestamp_198972) {
 			BeforeRet: do {
-				frame_198461(points_198523[points_198523_Idx], bounds_198526, ctx_198525);
-				if ((6.0000000000000000e+01 <= fps_198527)) {
-				L1: do {
-					var __198543 = 0;
-					var colontmp__198563 = 0;
-					colontmp__198563 = (((fps_198527 / 6.0000000000000000e+01))|0);
-					var res_198566 = 0;
-					L2: do {
-							L3: while (true) {
-							if (!(res_198566 <= colontmp__198563)) break L3;
-								__198543 = res_198566;
-								nimCopy(bounds_198526, move_sky_197040(points_198523, points_198523_Idx, false), NTI197020);
-								res_198566 += 1;
-							}
-					} while(false);
-				} while(false);
+				frame_198991(points_198754[points_198754_Idx], bounds_198933, ctx_198757);
+				if ((6.0000000000000000e+01 <= fps_198969)) {
+				nimCopy(bounds_198933, move_sky_199275(points_198754, points_198754_Idx, false, (fps_198969 / 6.0000000000000000e+01)), NTI198782);
 				}
 				else {
-					var new_bounds_198544 = move_sky_197040(points_198523, points_198523_Idx, false);
-					if (quit_198497(bounds_198526, new_bounds_198544)) {
-					canvas_198524.addEventListener("click", canvas_on_click_198517, false);
+					var new_bounds_199418 = move_sky_199275(points_198754, points_198754_Idx, false, (1.0000000000000000e+00 / (6.0000000000000000e+01 - fps_198969)));
+					if (quit_199435(bounds_198933, new_bounds_199418)) {
+					canvas_198756.addEventListener("click", canvas_on_click_198187, false);
 					break BeforeRet;
 					}
 					
-					nimCopy(bounds_198526, new_bounds_198544, NTI197020);
+					nimCopy(bounds_198933, new_bounds_199418, NTI198782);
 				}
 				
-				fps_198527 = calc_fps_198479(bounds_198526);
-				if ((6.0000000000000000e+01 <= fps_198527)) {
-				window.requestAnimationFrame(run_198528);
-				}
-				else {
-					window.setTimeout(timeout_198545, (((1.0000000000000000e+03 / fps_198527))|0));
-				}
-				
+				fps_198969 = calc_fps_198948(bounds_198933);
+				window.requestAnimationFrame(run_198970);
 			} while (false);
 
 			
 		}
 
-		var ctx_198525 = get_context2d_196728(canvas_198524);
-		var bounds_198526 = bounds_197152(points_198523[points_198523_Idx]);
-		var fps_198527 = calc_fps_198479(bounds_198526);
-		ctx_198525.font = "14px Monospace";
-		window.requestAnimationFrame(run_198528);
+		var ctx_198757 = get_context2d_196728(canvas_198756);
+		var bounds_198933 = bounds_198774(points_198754[points_198754_Idx]);
+		var fps_198969 = calc_fps_198948(bounds_198933);
+		ctx_198757.font = "14px Monospace";
+		window.requestAnimationFrame(run_198970);
 
 	
 }
 
-function canvas_on_click_198517(e_198519) {
-		var element_198600 = e_198519.target;
-		var data_id_198601 = element_198600.getAttribute("data-data-id");
-		var data_198602 = parse_json_181655(cstrToNimstr(document.getElementById(data_id_198601).innerHTML));
-		element_198600.removeEventListener("click", canvas_on_click_198517, false);
-		var points_198603 = [json_to_points_198029(data_198602)];
-		loop_198520(points_198603, 0, element_198600);
+function canvas_on_click_198187(e_198189) {
+		var element_198220 = e_198189.target;
+		var data_id_198221 = element_198220.getAttribute("data-data-id");
+		var data_198222 = parse_json_181655(cstrToNimstr(document.getElementById(data_id_198221).innerHTML));
+		element_198220.removeEventListener("click", canvas_on_click_198187, false);
+		var points_198731 = [json_to_points_198225(data_198222)];
+		loop_198748(points_198731, 0, element_198220);
 
 	
 }
 
-function HEX3Aanonymous_198618(e_198621) {
-		var elements_198622 = document.getElementsByClassName("day10-canvas");
+function HEX3Aanonymous_199522(e_199525) {
+		var elements_199526 = document.getElementsByClassName("day10-canvas");
 		L1: do {
-			var i_198669 = 0;
-			var __198670 = null;
-			var i_198674 = 0;
+			var i_199573 = 0;
+			var __199574 = null;
+			var i_199578 = 0;
 			L2: do {
 					L3: while (true) {
-					if (!(i_198674 < (elements_198622 != null ? elements_198622.length : 0))) break L3;
-						i_198669 = i_198674;
-						__198670 = elements_198622[i_198674];
-						elements_198622[i_198669].addEventListener("click", canvas_on_click_198517, false);
-						i_198674 += 1;
+					if (!(i_199578 < (elements_199526 != null ? elements_199526.length : 0))) break L3;
+						i_199573 = i_199578;
+						__199574 = elements_199526[i_199578];
+						elements_199526[i_199573].addEventListener("click", canvas_on_click_198187, false);
+						i_199578 += 1;
 					}
 			} while(false);
 		} while(false);
 
 	
 }
-window.onload = HEX3Aanonymous_198618;
+window.onload = HEX3Aanonymous_199522;
