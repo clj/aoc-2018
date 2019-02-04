@@ -4,3 +4,4 @@ set -ex
 DIR=$(dirname "$0")
 
 cd ../10 && ./build.sh && cd $DIR
+cd ../13 && ./build.sh && cd $DIR
