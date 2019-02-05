@@ -1,5 +1,8 @@
 {{- $attrs := slice -}}
 {{- range $key, $value := .Params -}}
+	{{- if and (eq $key "src") (hasPrefix $value "/") -}}
+		{{- $value = (slicestr $value 1) | absLangURL -}}
+	{{- end -}}
 	{{- if not (in (slice "type") $key) -}}
 		{{- $attr := printf "%s=\"%s\"" $key ($value | safeHTMLAttr) -}}
 		{{- $attrs = $attrs | append $attr -}}
