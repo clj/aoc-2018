@@ -3,4 +3,8 @@
 		{{ $style := resources.Get "sass/aoc.scss" | toCSS | minify | fingerprint }}
 		<link rel="stylesheet" type="text/css" href="{{ $style.Permalink }}">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+		{{- if .HasShortcode "asciinema" -}}
+		<link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}css/asciinema-player.css" />
+		<script src="{{ .Site.BaseURL }}/js/asciinema-player.js"></script>
+		{{- end -}}
 	</head>
