@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>	<head>
+		<title>Day 13: Mine Cart Madness</title>
+		
+		<link rel="stylesheet" type="text/css" href="https://clj.github.io/aoc-2018/sass/aoc.min.4f6d0ea2e4c6908e60ca129961dcb6600717bf308f0af74844c2e596ca6ef0d8.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"><link rel="stylesheet" type="text/css" href="https://clj.github.io/aoc-2018/css/asciinema-player.css" />
+		<script src="https://clj.github.io/aoc-2018//js/asciinema-player.js"></script></head><body>
+<div class="wrapper">  <header class="header">
+  	<site-title><a href="https://clj.github.io/aoc-2018/">Advent of Code 2018</a> - <a href="https://github.com/clj">clj</a>'s Nim Solutions</site-title>
+	<links><a href="https://github.com/clj/aoc-2018"><i class="fab fa-github"></i></a></links>
+  </header><article class="main">
+	
+
+<h1 id="hahahugoshortcode-0xc00015d400-1-hbhb">Day 13: Mine Cart Madness</h1>
+
+<p>For <a href="https://adventofcode.com/2018/day/13">Day 13</a> we get to crash mine carts until there is only one remaining. As part of the original solution, if the terminal size is able to contain all the tracks, the progress of the mine are displayed. While it would be possible to pipe that output into the excellent <a href="https://github.com/asciinema/asciinema">asciinema Terminal Session Recorder</a> it seemed like more fun to write an <a href="https://github.com/clj/aoc-2018/blob/master/lib/asciinema.nim">asciinema Nim library</a> that can &lsquo;record&rsquo; and output <a href="https://github.com/asciinema/asciinema/blob/develop/doc/asciicast-v2.md">asciicast v2</a> files. The result is below, a small, and <strong>short</strong> animation!</p>
+
+<h2 id="test-input">Test Input</h2>
+
+<asciinema-player cols="14" font-size="big" poster="npt:0:00" rows="7" src="https://clj.github.io/aoc-2018/casts/13/test_input_01.cast" theme="monokai"></asciinema-player>
+
+<p>If you found that exciting, scroll down the page to find the <a href="#puzzle-input">puzzle input</a>, which plays for roughly 17 exhilarating minutes.</p>
+
+<h2 id="lookup-tables">Lookup Tables</h2>
+
+<p>The most interesting aspect of the approach to the solution for Day 10 is that it is almost entirely lookup table driven. That is, it does not consist of a series of <code>if</code> statements, e.g. for finding the tile a cart would move to:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nim" data-lang="nim">  <span style="color:#66d9ef">if</span> cart <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;^&#39;</span>:
+    new_tile <span style="color:#f92672">=</span> map<span style="color:#f92672">[</span>y <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">][</span>x<span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">elif</span> cart <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&gt;&#39;</span>:
+    new_tile <span style="color:#f92672">=</span> map<span style="color:#f92672">[</span>y<span style="color:#f92672">][</span>x <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">]</span>
+  ...</code></pre></div>
+
+<p>Instead the following <code>const</code> block defines various rules that are used in the main <code>move</code> loop to move the cart depending on the conditions of the cart and the track it is on:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nim" data-lang="nim"><span style="color:#66d9ef">const</span>
+  carts <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&lt;^&gt;v&#34;</span>
+  crashed_cart <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;X&#39;</span>
+  cart_directions <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>(x: <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, y: <span style="color:#ae81ff">0</span>), (x: <span style="color:#ae81ff">0</span>, y: <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>), (x: <span style="color:#ae81ff">1</span>, y: <span style="color:#ae81ff">0</span>), (x: <span style="color:#ae81ff">0</span>, y: <span style="color:#ae81ff">1</span>)<span style="color:#f92672">]</span>
+  cart_tracks <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;-|-|&#34;</span>
+  cart_turn_multiplier <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span>
+  track_turn_multiplier <span style="color:#f92672">=</span> <span style="color:#f92672">[-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">]</span>
+  directions <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;LSR&#34;</span>
+  directions_turn <span style="color:#f92672">=</span> <span style="color:#f92672">[-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">]</span>
+  straight_tracks <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;|-&#34;</span>
+  intersection_tracks <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;+&#34;</span>
+  turning_tracks <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">&#34;</span>
+  empty <span style="color:#f92672">=</span> <span style="color:#66d9ef">char</span>(<span style="color:#ae81ff">0</span>)</code></pre></div>
+
+<p>Using the above lookup &lsquo;tables&rsquo;, finding the new tile a cart moves to becomes:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nim" data-lang="nim">  <span style="color:#66d9ef">let</span> movement <span style="color:#f92672">=</span> cart_directions<span style="color:#f92672">[</span>carts.find(tile.cart)<span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">let</span> new_tile <span style="color:#f92672">=</span> map<span style="color:#f92672">[</span>y <span style="color:#f92672">+</span> movement.y<span style="color:#f92672">][</span>x <span style="color:#f92672">+</span> movement.x<span style="color:#f92672">]</span></code></pre></div>
+
+<h2 id="size-matters">Size Matters</h2>
+
+<p>It turns out that naively outputting the animation for the test input is fine, it results in a file that is 3345 bytes&hellip; and it turns out that this is not fine for the actual puzzle input, which results in a file that is just shy of 240MB.</p>
+
+<p>The naive approach in this case, is, for each frame: clear the screen then render the entire screen. This approach generates a lot of data (over 23k bytes) for each frame when animating the puzzle input, which is 150x150 characters; and with over 10000 frames before there is only one cart remaining we get a file size that the <a href="https://github.com/asciinema/asciinema-player">web asciinema player</a> struggles to handle. While it obviously takes a long time to load the file, seeking (since there are no key-frames in asciiicasts) is a painful affair.</p>
+
+<h3 id="optimising">Optimising</h3>
+
+<p>I used a couple of strategies to optimise the output, compared to the naive approach (<code>-d:inefficient</code>):</p>
+
+<ol>
+<li>Only render the tracks once and make all subsequent frames render only the individual characters that changed</li>
+<li>As the output is colourised, output each colour as a separate pass instead of all positions sorted left-to-right, top-to-bottom (<code>-d:sorted</code>)</li>
+<li>Use shorter cursor movement sequences where possible (turned off using <code>-d:not_optimised</code>)</li>
+</ol>
+
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>test input</th>
+<th>puzzle input</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>-d:inefficient</code></td>
+<td>3345</td>
+<td>239136946</td>
+</tr>
+
+<tr>
+<td><code>-d:sorted</code></td>
+<td>1944</td>
+<td>2001456</td>
+</tr>
+
+<tr>
+<td><code>-d:not_optimised</code></td>
+<td>1941</td>
+<td>1821013</td>
+</tr>
+
+<tr>
+<td>default compile flags</td>
+<td>1906</td>
+<td>1812945</td>
+</tr>
+</tbody>
+</table>
+
+<p>Moving away from the naive approach predictably had a large effect. The gain from the other optimisations is fairly marginal.</p>
+
+<h2 id="puzzle-input">Puzzle Input</h2>
+
+<asciinema-player cols="151" font-size="25%" rows="151" src="https://clj.github.io/aoc-2018/casts/13/input.cast" theme="monokai"></asciinema-player>
+
+<p>Did you find the remaining cart? ;)</p>
+
+  </article>  <aside class="aside menu">
+  	<ul class="menu">
+  		
+        
+        
+          <li hugo-nav="/aoc-2018/day/10/"><a href="/aoc-2018/day/10/">Day 10</a></li>
+        
+  		
+        
+        
+          <li class="active" hugo-nav="/aoc-2018/day/13/"><span>Day 13</span></li>
+        
+  		
+  	</ul>
+  </aside>  <footer class="footer">
+  	<div class="license">
+ 		This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>. <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
+ 	</div>
+  </footer></div>
+
+    </body>
+</html>

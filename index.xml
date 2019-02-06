@@ -22,5 +22,14 @@ The core of this solution is obviously fairly simple:
 proc move_sky*(points: var Points) = for i, point in points: points[i].x = point.x + point.vx points[i].y = point.y + point.vy Run that for the correct number of iterations and the &amp;ldquo;stars&amp;rdquo; will have aligned&amp;hellip; The actual move_sky function used in the solution is slightly bigger as it also calculates the bounds of the stars, which are used to detect when the stars have aligned and the message is readable.</description>
     </item>
     
+    <item>
+      <title>Day 13: Mine Cart Madness</title>
+      <link>https://clj.github.io/aoc-2018/day/13/</link>
+      <pubDate>Tue, 05 Feb 2019 23:38:07 +0100</pubDate>
+      
+      <guid>https://clj.github.io/aoc-2018/day/13/</guid>
+      <description>Day 13: Mine Cart Madness For Day 13 we get to crash mine carts until there is only one remaining. As part of the original solution, if the terminal size is able to contain all the tracks, the progress of the mine are displayed. While it would be possible to pipe that output into the excellent asciinema Terminal Session Recorder it seemed like more fun to write an asciinema Nim library that can &amp;lsquo;record&amp;rsquo; and output asciicast v2 files.</description>
+    </item>
+    
   </channel>
 </rss>
