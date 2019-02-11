@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>	<head>
+		<title>Day 17: Reservoir Research</title>
+		
+		<link rel="stylesheet" type="text/css" href="https://clj.github.io/aoc-2018/sass/aoc.min.4f6d0ea2e4c6908e60ca129961dcb6600717bf308f0af74844c2e596ca6ef0d8.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"><link rel="stylesheet" type="text/css" href="https://clj.github.io/aoc-2018/css/asciinema-player.css" />
+		<script src="https://clj.github.io/aoc-2018//js/asciinema-player.js"></script></head><body>
+<div class="wrapper">  <header class="header">
+  	<site-title><a href="https://clj.github.io/aoc-2018/">Advent of Code 2018</a> - <a href="https://github.com/clj">clj</a>'s Nim Solutions</site-title>
+	<links><a href="https://github.com/clj/aoc-2018"><i class="fab fa-github"></i></a></links>
+  </header><article class="main">
+	
+
+<style>
+video {
+  width: 100%;
+  max-height: 100%;
+  height: auto;
+}
+#video {
+    margin-left: 3em;
+    margin-right: 3em;
+}
+.text-input-videos {
+
+}
+.text-input-videos ul {
+    list-style: none;
+    display: flex;
+    flex-flow: row wrap;
+ justify-content: center;
+ padding: 0;
+ margin: 0;
+}
+.text-input-videos li {
+    margin: 2em;
+}
+.text-input-videos .caption {
+    padding: 1em;
+    text-align: center;
+}
+</style>
+
+<h1 id="hahahugoshortcode-0xc000279900-1-hbhb">Day 17: Reservoir Research</h1>
+
+<p>For <a href="https://adventofcode.com/2018/day/17">Day 17</a> we get an underground scan and are required to map the flow of water through sand and clay. The clay blocks and collects the water&hellip; as the animation below illustrates.</p>
+
+<h2 id="puzzle-input">Puzzle Input</h2>
+
+<div id="video">
+<video width="320" height="240" controls>
+  <source src="https://clj.github.io/aoc-2018/videos/17/input.mp4" type="video/mp4">
+</video>
+</div>
+
+<p>The puzzle input is rendered by looping over the relevant portion of the ASCII based &ldquo;map&rdquo; and rendering it into an array of pixels which are saved as a PNG using the <a href="https://github.com/nothings/stb">stb_image_write</a> library. <a href="https://www.ffmpeg.org">FFmpeg</a> is then run over the generated PNGs to produce the h264 video. Wrapping a video encoding library seemed like too much work!</p>
+
+<p>Generating nice looking output was the challenge here, not difficult, but still elusive. The original algorithm used to solve the puzzle filled as much vertically or horizontally as possible, but for the animation I wanted one movement in the same direction of flow per frame. The easiest way to do that turned out to be to disqualify newly generated tiles when testing if a tile should change state.</p>
+
+<h2 id="test-inputs">Test Inputs</h2>
+
+<p>Below is the test input from the problem description as well as some test inputs I generated to fix various problems with the rendering algorithm, all rendered in glorious ASCII. As evidenced by test_input_0A, not every case is exactly covered, but that isn&rsquo;t one that comes up in the puzzle input, so ¯\<em>(ツ)</em>/¯</p>
+
+<div class="text-input-videos">
+    <ul>
+        <li>
+        <asciinema-player cols="22" font-size="50%" rows="22" src="https://clj.github.io/aoc-2018/casts/17/test_input_01.cast" theme="monokai"></asciinema-player>
+        <div class="caption">test_input_01</div>
+        </li>
+        <li>
+        <asciinema-player cols="22" font-size="50%" rows="22" src="https://clj.github.io/aoc-2018/casts/17/test_input_0A.cast" theme="monokai"></asciinema-player>
+        <div class="caption">test_input_0A</div>
+        </li>
+        <li>
+        <asciinema-player cols="30" font-size="50%" rows="22" src="https://clj.github.io/aoc-2018/casts/17/test_input_0B.cast" theme="monokai"></asciinema-player>
+        <div class="caption">test_input_0B</div>
+        </li>
+        <li>
+        <asciinema-player cols="35" font-size="50%" rows="22" src="https://clj.github.io/aoc-2018/casts/17/test_input_0C.cast" theme="monokai"></asciinema-player>
+        <div class="caption">test_input_0C</div>
+        </li>
+        <li>
+        <asciinema-player cols="35" font-size="50%" rows="22" src="https://clj.github.io/aoc-2018/casts/17/test_input_0D.cast" theme="monokai"></asciinema-player>
+        <div class="caption">test_input_0D</div>
+        </li>
+        <li>
+        <asciinema-player cols="35" font-size="50%" rows="22" src="https://clj.github.io/aoc-2018/casts/17/test_input_0E.cast" theme="monokai"></asciinema-player>
+        <div class="caption">test_input_0E</div>
+        </li>
+    </ul>
+</div>
+
+  </article>  <aside class="aside menu">
+  	<ul class="menu">
+  		
+        
+        
+          <li hugo-nav="/aoc-2018/day/10/"><a href="/aoc-2018/day/10/">Day 10</a></li>
+        
+  		
+        
+        
+          <li hugo-nav="/aoc-2018/day/13/"><a href="/aoc-2018/day/13/">Day 13</a></li>
+        
+  		
+        
+        
+          <li class="active" hugo-nav="/aoc-2018/day/17/"><span>Day 17</span></li>
+        
+  		
+  	</ul>
+  </aside>  <footer class="footer">
+  	<div class="license">
+ 		This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>. <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
+ 	</div>
+  </footer></div>
+
+    </body>
+</html>

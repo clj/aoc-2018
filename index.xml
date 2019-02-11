@@ -31,5 +31,14 @@ proc move_sky*(points: var Points) = for i, point in points: points[i].x = point
       <description>Day 13: Mine Cart Madness For Day 13 we get to crash mine carts until there is only one remaining. As part of the original solution, if the terminal size is able to contain all the tracks, the progress of the mine are displayed. While it would be possible to pipe that output into the excellent asciinema Terminal Session Recorder it seemed like more fun to write an asciinema Nim library that can &amp;lsquo;record&amp;rsquo; and output asciicast v2 files.</description>
     </item>
     
+    <item>
+      <title>Day 17: Reservoir Research</title>
+      <link>https://clj.github.io/aoc-2018/day/17/</link>
+      <pubDate>Sun, 10 Feb 2019 23:08:14 +0100</pubDate>
+      
+      <guid>https://clj.github.io/aoc-2018/day/17/</guid>
+      <description>video { width: 100%; max-height: 100%; height: auto; } #video { margin-left: 3em; margin-right: 3em; } .text-input-videos { } .text-input-videos ul { list-style: none; display: flex; flex-flow: row wrap; justify-content: center; padding: 0; margin: 0; } .text-input-videos li { margin: 2em; } .text-input-videos .caption { padding: 1em; text-align: center; }  Day 17: Reservoir Research For Day 17 we get an underground scan and are required to map the flow of water through sand and clay.</description>
+    </item>
+    
   </channel>
 </rss>
