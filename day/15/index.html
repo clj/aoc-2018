@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>	<head>
+		<title>Day 15: Beverage Bandits</title>
+		
+		<link rel="stylesheet" type="text/css" href="https://clj.github.io/aoc-2018/sass/aoc.min.b83cec353a8d8a94e0d6182488841ff0f1078dce1e22093fc97c9f7559dbf0de.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"></head><body>
+<div class="wrapper">  <header class="header">
+  	<site-title><a href="https://clj.github.io/aoc-2018/">Advent of Code 2018</a> - <a href="https://github.com/clj">clj</a>'s Nim Solutions</site-title>
+	<links><a href="https://github.com/clj/aoc-2018"><i class="fab fa-github"></i></a></links>
+  </header><article class="main">
+	
+
+<style>
+div.side-by-side {
+    display: flex;
+    flex-flow: row wrap;
+}
+div.side-by-side div {
+    flex: 1;
+}
+canvas.terminal {
+  margin: 8px;
+}
+.controls {
+    width: 800px;
+    display: flex;
+}
+.controls div {
+    display: flex;
+    flex-flow: column wrap;
+    width: 100%;
+}
+input.attack {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+</style>
+
+<h1 id="hahahugoshortcode-0xc0001be500-1-hbhb">Day 15: Beverage Bandits</h1>
+
+<p><a href="https://adventofcode.com/2018/day/15">Day 15</a> is about simulating a battle between the hot chocolate making Elves and the hot chocolate wanting Goblins.</p>
+
+<h2 id="terminal-emulation">Terminal Emulation</h2>
+
+<p>The original code already output the state of the battle for each round, in the same way as shown in day&rsquo;s problem description. It would be fairly easy to render the battle using the asciinema library from <a href="../13">Day 13</a>, but part II of the problem is all about changing the parameters to find the attack power required for the Elves to win. Compiling the problem to JavaScript would make it possible to let the play with this parameter.</p>
+
+<p>So instead of recording the terminal output, why not make a small HTML5 canvas based terminal renderer?</p>
+
+<h2 id="input">Input</h2>
+
+<canvas id="terminal" class="terminal border" width="800" height="550"></canvas>
+
+<div class="controls">
+    <button type="button" class="button large" id="run-button"><i class="fas fa-running"></i></button>
+    <button type="button" class="button large" id="step-button"><i class="fas fa-step-forward"></i></button>
+    <button type="button" class="button large" id="reset-button"><i class="fas fa-skull-crossbones"></i></button>
+    <div>
+        <input type="range" value="3" min="0" max="200" class="attack" id="attack-slider"/>
+        <span id="attack-slider-value" style="text-align: center">3</span>
+    </div>
+    <select id="input-select">
+    </select>
+</div>
+
+<!-- ## Optimisations -->
+
+<h2 id="pitfalls">Pitfalls</h2>
+
+<p>While optimising the code I ran into some very strange behaviour that was hard to pin down. It turns out I should have tried the development snapshot of the Nim compiler, which has fixed the code generation problem that caused this reduced test case to behave differently when compiled through the C code generator and the JS code gen:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nim" data-lang="nim"><span style="color:#66d9ef">type</span>
+  Point <span style="color:#f92672">=</span> <span style="color:#66d9ef">tuple</span><span style="color:#f92672">[</span>x, y: <span style="color:#66d9ef">int</span><span style="color:#f92672">]</span>
+
+<span style="color:#66d9ef">var</span> targets <span style="color:#f92672">=</span> newSeq<span style="color:#f92672">[</span><span style="color:#66d9ef">tuple</span><span style="color:#f92672">[</span>d: <span style="color:#66d9ef">int</span>, p: Point<span style="color:#f92672">]]</span>()
+<span style="color:#66d9ef">for</span> point <span style="color:#f92672">in</span> <span style="color:#f92672">[</span>(x: <span style="color:#ae81ff">1</span>, y: <span style="color:#ae81ff">1</span>), (x: <span style="color:#ae81ff">1</span>, y: <span style="color:#ae81ff">2</span>)<span style="color:#f92672">]</span>:
+  echo(<span style="color:#f92672">$</span>point)
+  <span style="color:#75715e">#let point = point</span>
+  targets.add((<span style="color:#ae81ff">0</span>, point))
+echo(<span style="color:#f92672">$</span>targets)</code></pre></div>
+
+<div class="side-by-side">
+<div>
+C:
+<pre>
+(x: 1, y: 1)
+(x: 1, y: 2)
+@[(d: 0, p: (x: 1, y: 1)), (d: 0, p: (x: 1, y: 2))]
+</pre>
+</div>
+<div>
+JS:
+<pre>
+(x: 1, y: 1)
+(x: 1, y: 2)
+@[(d: 0, p: (x: 1, y: 2)), (d: 0, p: (x: 1, y: 2))]
+</pre>
+</div>
+</div>
+
+<p>Notice how the resulting arrays are different, which is because the loop variable <code>point</code> is an array containing an object representing a <code>Point</code>, and this object is reused on each iteration. With the Nim 0.19.4 compiler however, it is this object, and not a copy, that is placed in the results array. So at the end of the loop, all the <code>Point</code>s in the <code>target</code> array will have the same value.</p>
+
+<h2 id="is-it-the-same">Is it the Same?</h2>
+
+<p>The optimised code gives the correct answer for all of the test input as well as the actual puzzle input. It is not quite the same algorithm as the original code though, as can be seen below:</p>
+
+<div class="side-by-side">
+<div>
+original:
+<pre>
+################################
+#######...######################
+########.....###################
+##########....############.....#
+###########...#####..#####.....#
+###########...###..............#
+##########..#####....#######..##
+###########.....#...############
+#####.#####..........####....###
+####.....###.........##.#....###
+####.#.............G.......#####
+####......#.....G......G....####
+##....#.......#####.....G..#####
+########.....#######..G....#####
+########....#########..G..######
+########....#########.G.G.######
+#######.....#########GEG..######
+#######.....#########.G..#######
+#######...#.#########..G.#######
+####.........#######.G.#.#######
+##...#........#####....#.#######
+###..#...##..G.............###.#
+######.......G...........#.....#
+#######.....G...........########
+#.###...#######........#########
+#..##.######..#.#.....##########
+#..#....##......##.....#########
+#.......###.#..##......#########
+#....#######...........#########
+#.##########..........##########
+#############.###.......########
+################################
+</pre>
+</div>
+<div>
+new:
+<pre>
+################################
+#######...######################
+########.....###################
+##########....############.....#
+###########...#####..#####.....#
+###########...###..............#
+##########..#####....#######..##
+###########.....#...############
+#####.#####..........####....###
+####.....###.........##.#....###
+####.#..........G......G...#####
+####......#..G........G.....####
+##....#.......#####.....G..#####
+########.....#######...G...#####
+########....#########...G.######
+########....#########.G...######
+#######.....#########GEG..######
+#######.....#########.GG.#######
+#######...#.#########....#######
+####.........#######.G.#.#######
+##...#........#####....#.#######
+###..#...##..G.............###.#
+######.......G...........#.....#
+#######.....G...........########
+#.###...#######........#########
+#..##.######..#.#.....##########
+#..#....##......##.....#########
+#.......###.#..##......#########
+#....#######...........#########
+#.##########..........##########
+#############.###.......########
+################################
+</pre>
+</div>
+</div>
+
+<p>I could spend the time checking which of the programs generating the above output (if any) is correct&hellip; but lets not.</p>
+
+<script type="text/javascript" src="https://clj.github.io/aoc-2018/js/day15.js"></script>
+
+<script type="text/x-game-map" id="input">
+################################
+#######..G######################
+########.....###################
+##########....############.....#
+###########...#####..#####.....#
+###########G..###GG....G.......#
+##########.G#####G...#######..##
+###########...G.#...############
+#####.#####..........####....###
+####.....###.........##.#....###
+####.#................G....#####
+####......#.................####
+##....#G......#####........#####
+########....G#######.......#####
+########..G.#########.E...######
+########....#########.....######
+#######.....#########.....######
+#######...G.#########....#######
+#######...#.#########....#######
+####.G.G.....#######...#.#######
+##...#...G....#####E...#.#######
+###..#.G.##...E....E.......###.#
+######...................#....E#
+#######...............E.########
+#G###...#######....E...#########
+#..##.######.E#.#.....##########
+#..#....##......##.E...#########
+#G......###.#..##......#########
+#....#######....G....E.#########
+#.##########..........##########
+#############.###.......########
+################################
+
+</script>
+
+<script type="text/x-game-map" id="test_input_01">
+#######
+#.G.E.#
+#E.G.E#
+#.G.E.#
+#######
+</script>
+
+<script type="text/x-game-map" id="test_input_02">
+#######
+#E..G.#
+#...#.#
+#.G.#G#
+#######
+
+</script>
+
+<script type="text/x-game-map" id="test_input_03">
+#######
+#.E...#
+#.....#
+#...G.#
+#######
+</script>
+
+<script type="text/x-game-map" id="test_input_04">
+#########
+#G..G..G#
+#.......#
+#.......#
+#G..E..G#
+#.......#
+#.......#
+#G..G..G#
+#########
+</script>
+
+<script type="text/x-game-map" id="test_input_05">
+#######
+#.G...#
+#...EG#
+#.#.#G#
+#..G#E#
+#.....#
+#######
+</script>
+
+<script type="text/x-game-map" id="test_input_06">
+#######
+#G..#E#
+#E#E.E#
+#G.##.#
+#...#E#
+#...E.#
+#######
+</script>
+
+<script type="text/x-game-map" id="test_input_07">
+#######
+#E..EG#
+#.#G.E#
+#E.##E#
+#G..#.#
+#..E#.#
+#######
+</script>
+
+<script type="text/x-game-map" id="test_input_09">
+#######
+#.E...#
+#.#..G#
+#.###.#
+#E#G#G#
+#...#G#
+#######
+</script>
+
+<script type="text/x-game-map" id="test_input_10">
+#########
+#G......#
+#.E.#...#
+#..##..G#
+#...##..#
+#...#...#
+#.G...G.#
+#.....G.#
+#########
+</script>
+
+  </article>  <aside class="aside menu">
+  	<ul class="menu">
+  		
+        
+        
+          <li hugo-nav="/aoc-2018/day/10/"><a href="/aoc-2018/day/10/">Day 10</a></li>
+        
+  		
+        
+        
+          <li hugo-nav="/aoc-2018/day/13/"><a href="/aoc-2018/day/13/">Day 13</a></li>
+        
+  		
+        
+        
+          <li class="active" hugo-nav="/aoc-2018/day/15/"><span>Day 15</span></li>
+        
+  		
+        
+        
+          <li hugo-nav="/aoc-2018/day/17/"><a href="/aoc-2018/day/17/">Day 17</a></li>
+        
+  		
+  	</ul>
+  </aside>  <footer class="footer">
+  	<div class="license">
+ 		This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>. <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
+ 	</div>
+  </footer></div>
+
+    </body>
+</html>

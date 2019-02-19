@@ -32,6 +32,15 @@ proc move_sky*(points: var Points) = for i, point in points: points[i].x = point
     </item>
     
     <item>
+      <title>Day 15: Beverage Bandits</title>
+      <link>https://clj.github.io/aoc-2018/day/15/</link>
+      <pubDate>Wed, 20 Feb 2019 00:32:11 +0100</pubDate>
+      
+      <guid>https://clj.github.io/aoc-2018/day/15/</guid>
+      <description>div.side-by-side { display: flex; flex-flow: row wrap; } div.side-by-side div { flex: 1; } canvas.terminal { margin: 8px; } .controls { width: 800px; display: flex; } .controls div { display: flex; flex-flow: column wrap; width: 100%; } input.attack { margin-left: 20px; margin-right: 20px; }  Day 15: Beverage Bandits Day 15 is about simulating a battle between the hot chocolate making Elves and the hot chocolate wanting Goblins.</description>
+    </item>
+    
+    <item>
       <title>Day 17: Reservoir Research</title>
       <link>https://clj.github.io/aoc-2018/day/17/</link>
       <pubDate>Sun, 10 Feb 2019 23:08:14 +0100</pubDate>
