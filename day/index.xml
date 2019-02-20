@@ -49,5 +49,14 @@ proc move_sky*(points: var Points) = for i, point in points: points[i].x = point
       <description>video { width: 100%; max-height: 100%; height: auto; } #video { margin-left: 3em; margin-right: 3em; } .text-input-videos { } .text-input-videos ul { list-style: none; display: flex; flex-flow: row wrap; justify-content: center; padding: 0; margin: 0; } .text-input-videos li { margin: 2em; } .text-input-videos .caption { padding: 1em; text-align: center; }  Day 17: Reservoir Research For Day 17 we get an underground scan and are required to map the flow of water through sand and clay.</description>
     </item>
     
+    <item>
+      <title>Day 18: Settlers of The North Pole</title>
+      <link>https://clj.github.io/aoc-2018/day/18/</link>
+      <pubDate>Wed, 20 Feb 2019 23:00:00 +0100</pubDate>
+      
+      <guid>https://clj.github.io/aoc-2018/day/18/</guid>
+      <description>.automaton { display: flex; } .controls { display: flex; flex-flow: column wrap; padding-left: 25px; } .controls  * { margin-bottom: 25px; } #generation { text-align: center; }  Day 18: Settlers of The North Pole Day 18 is cellular automaton day. The goal is to determine the resource value (| multiplied by #) after a certain number of iterations. For Part I the resource value after 10 iterations is the answer, which is easy.</description>
+    </item>
+    
   </channel>
 </rss>
