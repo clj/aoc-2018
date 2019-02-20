@@ -7,3 +7,4 @@ cd ../10 && ./build.sh && cd $DIR
 cd ../13 && ./build.sh && cd $DIR
 cd ../15 && ./build.sh && cd $DIR
 cd ../17 && ./build.sh && cd $DIR
+cd ../18 && ./build.sh && cd $DIR
