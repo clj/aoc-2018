@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>	<head>
+		<title>Day 25: Four-Dimensional Adventure</title>
+		
+		<link rel="stylesheet" type="text/css" href="https://clj.github.io/aoc-2018/sass/aoc.min.b83cec353a8d8a94e0d6182488841ff0f1078dce1e22093fc97c9f7559dbf0de.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"></head><body>
+<div class="wrapper">  <header class="header">
+  	<site-title><a href="https://clj.github.io/aoc-2018/">Advent of Code 2018</a> - <a href="https://github.com/clj">clj</a>'s Nim Solutions</site-title>
+	<links><a href="https://github.com/clj/aoc-2018"><i class="fab fa-github"></i></a></links>
+  </header><article class="main">
+	
+
+<style>
+.image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image-container img {
+    width: 100%;
+    height: auto;
+}
+</style>
+
+<h1 id="hahahugoshortcode-0xc00073a000-1-hbhb">Day 25: Four-Dimensional Adventure</h1>
+
+<p>The last day of the Advent of Code (in 2018 at least): <a href="https://adventofcode.com/2018/day/25">Day 25</a>. Not a day that I can really condone since real advent calendars end on the 24th, but since I got this far I might as well get my last gold stars.</p>
+
+<p>The puzzle is to find the number of constellations made out of a number four dimensional points. A point belongs to a constellation if the <a href="https://en.wikipedia.org/wiki/Taxicab_geometry">Manhattan distance</a> between two points are less or equal to three. Finding the Manhattan distance between the higher dimensional points is not particularly difficult, and neither was finding the constellations. Instead&hellip;</p>
+
+<h2 id="visualising">Visualising</h2>
+
+<p>&hellip;visualising these constellations would be a way to waste innumerable hours, especially because I decided to write some rendering code myself based on the <a href="https://www.scratchapixel.com/">scratchapixel</a> tutorials. The rendering is described briefly in the <a href="#rendering">rendering</a> section below.</p>
+
+<h3 id="3d">3D</h3>
+
+<p><div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/322514677?loop=1&color=009900&portrait=0&title=0&byline=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script></p>
+
+<p>The first visualisation shows all the points plotted in 3 dimensions with the constellations coloured according to number of points (blue: a few, red: many). This visualisation ignores the 4th dimension, except for calculating the Manhattan distance. The camera performs one revolution around the centre in 60 seconds.</p>
+
+<h3 id="4d">4D</h3>
+
+<p><div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/322516379?loop=1&color=009900&portrait=0&title=0&byline=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script></p>
+
+<p>The second visualisation represents the fourth dimension as time, which is spanned out over the 60 seconds of the rotation around the centre. Only points which are within a distance of three points on either side of the current time are shown. Points around the current time at full brightness and points towards the start and end of the visible range are dim.</p>
+
+<h2 id="rendering">Rendering</h2>
+
+<p>The rendering is done using a simple wire-frame renderer implemented based on various articles in scratchapixel:</p>
+
+<ul>
+<li><a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/get-started">https://www.scratchapixel.com/lessons/3d-basic-rendering/get-started</a></li>
+<li><a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/rendering-3d-scene-overview/perspective-projection">https://www.scratchapixel.com/lessons/3d-basic-rendering/rendering-3d-scene-overview/perspective-projection</a></li>
+<li><a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/computing-pixel-coordinates-of-3d-point">https://www.scratchapixel.com/lessons/3d-basic-rendering/computing-pixel-coordinates-of-3d-point</a></li>
+<li><a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/computing-pixel-coordinates-of-3d-point/mathematics-computing-2d-coordinates-of-3d-points">https://www.scratchapixel.com/lessons/3d-basic-rendering/computing-pixel-coordinates-of-3d-point/mathematics-computing-2d-coordinates-of-3d-points</a></li>
+</ul>
+
+<p>In the videos above the 2D position for each point is calculated and then lines are drawn between points (between the projected 2D points) where the Manhattan distance of the 4D points are within 3 units of each other. This means that lines between points do not necessarily cross each other correctly and there is no visible indicator (e.g. size) that one line is closer than another. The points are finally drawn on top of everything else (again, same size and generally with complete disregard for distance to the camera). Since the camera rotates around the centre of the scene there is a perception of depth.</p>
+
+<p>The videos are rendered in glorious 4K (because, why not&hellip; though I skimped on the HDR, sorry) and encoded using <a href="https://ffmpeg.org">ffmpeg</a> H.265. To avoid unsightly temporary PNG files hanging around, all the frames are piped from the rendering program to ffmpeg.</p>
+
+  </article>  <aside class="aside menu">
+  	<ul class="menu">
+  		
+        
+        
+          <li hugo-nav="/aoc-2018/day/10/"><a href="/aoc-2018/day/10/">Day 10</a></li>
+        
+  		
+        
+        
+          <li hugo-nav="/aoc-2018/day/13/"><a href="/aoc-2018/day/13/">Day 13</a></li>
+        
+  		
+        
+        
+          <li hugo-nav="/aoc-2018/day/15/"><a href="/aoc-2018/day/15/">Day 15</a></li>
+        
+  		
+        
+        
+          <li hugo-nav="/aoc-2018/day/17/"><a href="/aoc-2018/day/17/">Day 17</a></li>
+        
+  		
+        
+        
+          <li hugo-nav="/aoc-2018/day/18/"><a href="/aoc-2018/day/18/">Day 18</a></li>
+        
+  		
+        
+        
+          <li class="active" hugo-nav="/aoc-2018/day/25/"><span>Day 25</span></li>
+        
+  		
+  	</ul>
+  </aside>  <footer class="footer">
+  	<div class="license">
+ 		This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>. <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
+ 	</div>
+  </footer></div>
+
+    </body>
+</html>

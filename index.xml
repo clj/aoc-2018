@@ -58,5 +58,15 @@ proc move_sky*(points: var Points) = for i, point in points: points[i].x = point
       <description>.automaton { display: flex; } .controls { display: flex; flex-flow: column wrap; padding-left: 25px; } .controls  * { margin-bottom: 25px; } #generation { text-align: center; }  Day 18: Settlers of The North Pole Day 18 is cellular automaton day. The goal is to determine the resource value (| multiplied by #) after a certain number of iterations. For Part I the resource value after 10 iterations is the answer, which is easy.</description>
     </item>
     
+    <item>
+      <title>Day 25: Four-Dimensional Adventure</title>
+      <link>https://clj.github.io/aoc-2018/day/25/</link>
+      <pubDate>Sun, 10 Mar 2019 23:35:29 +0100</pubDate>
+      
+      <guid>https://clj.github.io/aoc-2018/day/25/</guid>
+      <description>.image-container { display: flex; align-items: center; justify-content: center; } .image-container img { width: 100%; height: auto; }  Day 25: Four-Dimensional Adventure The last day of the Advent of Code (in 2018 at least): Day 25. Not a day that I can really condone since real advent calendars end on the 24th, but since I got this far I might as well get my last gold stars.
+The puzzle is to find the number of constellations made out of a number four dimensional points.</description>
+    </item>
+    
   </channel>
 </rss>
