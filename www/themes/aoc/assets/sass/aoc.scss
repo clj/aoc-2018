@@ -149,3 +149,69 @@ div.highlight pre {
   text-shadow: 0 0 2px $fluorescent-text-colour;
   box-shadow: 0 0 2px $fluorescent-text-colour, 0 0 5px $fluorescent-text-colour, inset 0 0 2px $fluorescent-text-colour, inset 0 0 5px $fluorescent-text-colour;
 }
+
+.border {
+  box-shadow: 0 0 2px $fluorescent-text-colour, 0 0 5px $fluorescent-text-colour, inset 0 0 2px $fluorescent-text-colour, inset 0 0 5px $fluorescent-text-colour;
+}
+
+.button {
+  background-color: desaturate($link-colour, 35%);
+  box-shadow: 3px 3px 2px desaturate($link-colour, 65%);
+  border: none;
+  color: white;
+  padding: 0.4em 1.5em;
+  text-align: center;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: $link-colour;
+}
+
+.button:active {
+  background-color: $link-colour;
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 2px desaturate($link-colour, 75%);
+}
+
+.button:disabled {
+  background-color: desaturate($link-colour, 90%);
+  box-shadow: 3px 3px 2px desaturate($link-colour, 95%);
+}
+
+.large {
+  font-size: 200%;
+}
+
+select {
+  font-family: $fixed-width-font;
+  background-color: #ddd;
+  padding: 5px 35px 5px 5px;
+  font-size: 1em;
+  height: 2em;
+  border: 1px solid $fluorescent-text-colour;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* SVG From: https://git.blivesta.com/flexicon/# */
+  background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48cGF0aCBkPSJNMjQgMTEuMzA1bC03Ljk5NyAxMS4zOUw4IDExLjMwNXoiLz48L3N2Zz4=') 96% / 15% no-repeat #ddd;
+}
+
+/* CAUTION: IE hackery ahead */
+select::-ms-expand {
+    display: none; /* remove default arrow on ie10 and ie11 */
+}
+
+/* target Internet Explorer 9 to undo the custom arrow */
+@media screen and (min-width:0\0) {
+    select {
+        background:none\9;
+        padding: 5px\9;
+    }
+}
+
+$track-color: #eceff1 !default;
+$thumb-color: $link-colour;
+$thumb-border-color: desaturate($link-colour, 35%);
+
+@import '_inputrange';
