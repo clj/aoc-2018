@@ -1,0 +1,2 @@
+{{- $path := (printf "/plaindata/%s" (.Get 0)) -}}
+{{- readFile $path -}}
